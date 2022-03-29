@@ -27,21 +27,17 @@ interface WordCounter {
     /**
      * implementation should count words on a single thread and callback on main Thread, using coroutines
      */
-    suspend fun countWords(input: String) : Map<String, Int>
+    suspend fun countWords(input: String) : Map<String, Int> = emptyMap()
 
     /**
      * implementation should count words on a single thread per line and callback on main Thread, using coroutines
      */
-    suspend fun countWordsOneThreadPerLine(input: String) : Map<String, Int>
+    suspend fun countWordsOneThreadPerLine(input: String) : Map<String, Int> = emptyMap()
 
     /**
      * Create a Flow that emits the counts for each row
      */
-    suspend fun wordsOnLine(input: String) : Flow<Map<String, Int>> {
-        return flow {
-             input.lines().forEach {  emit(countWords(it)) }
-        }
-    }
+    suspend fun wordsOnLine(input: String) : Flow<Map<String, Int>> = emptyFlow()
 }
 
 @Parcelize
