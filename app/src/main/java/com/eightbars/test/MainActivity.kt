@@ -20,15 +20,7 @@ class MainActivity : AppCompatActivity(), WordCounter  {
         val textView = findViewById<TextView>(R.id.textView)
 
         button.setOnClickListener {
-           // countWords(textView.text.toString()) {  startNext(it.toCountResult()) }
-            lifecycleScope.launch {
-                startNext(countWordsOneThreadPerLine(textView.text.toString()).toCountResult())
-
-                wordsOnLine(textView.text.toString())
-                    .map { it.toCountResult() }
-                    .collect {  print(it) }
-            }
-
+           countWords(textView.text.toString()) {  startNext(it.toCountResult()) }
         }
     }
 

@@ -27,12 +27,16 @@ interface WordCounter {
     /**
      * implementation should count words on a single thread and callback on main Thread, using coroutines
      */
-    suspend fun countWords(input: String) : Map<String, Int> = emptyMap()
+    suspend fun singleThreadedCountWords(input: String) : Map<String, Int> = emptyMap()
 
     /**
      * implementation should count words on a single thread per line and callback on main Thread, using coroutines
+     *
+     * - how many threads should I user here?
+     * - how may parts should I split the string into?
+     * - how do you split the string?
      */
-    suspend fun countWordsOneThreadPerLine(input: String) : Map<String, Int> = emptyMap()
+    suspend fun multiThreadedCountWorks(input: String) : Map<String, Int> = emptyMap()
 
     /**
      * Create a Flow that emits the counts for each row
@@ -50,13 +54,16 @@ data class WordCount(val string: String, val count: Int) : Parcelable
  * Utility function to count words in text.
  */
 fun String.countWords() : Map<String, Int> {
-    val re = Regex("[^A-Za-z0-9 ]")
+    // how would you sanitise the string? are there any problems here
     return split(" ")
-        .map {
-            re.replace(it, "").lowercase(Locale.getDefault())
-        }
+        .map {  it }
         .groupBy { it }
         .mapValues { it.value.size }
+}
+
+fun String.splitString() : List<String> {
+    // how would you sanitise the string? are there any problems here
+    return lines()
 }
 
 fun Map<String, Int>.toCountResult() : CountResult =
